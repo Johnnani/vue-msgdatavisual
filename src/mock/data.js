@@ -1,0 +1,371 @@
+import Mock from 'mockjs'
+// const Random = Mock.Random
+
+//多媒体消息概况
+export const getMediaOverview = () => {
+  return Mock.mock({
+    'code':0,
+    'data':{
+      'totalNum':12120000000,
+      'totalRate':0.4,
+      'monthNum':6000000,
+      'monthRate':0.3,
+      'dayNum':50000
+    },
+    'msg':'success'
+  })
+}
+//多媒体消息日下发量
+export const getMediaDayNum = () => {
+  return Mock.mock({
+    'code':0,
+    'msg':'success',
+    'data':{
+      'preMonth|31':{
+        '1':120,
+        '2':132,
+        '3':101,
+        '4':134,
+        '5':90,
+        '6':230,
+        '7':210,
+        '8':120,
+        '9':132,
+        '10':101,
+        '11':134,
+        '12':90,
+        '13':2000,
+        '14':5000,
+        '15':4000,
+        '16':2000,
+        '17':5000,
+        '18':4000,
+        '19':2000,
+        '20':5000,
+        '21':4000,
+        '22':2000,
+        '23':2000,
+        '24':5000,
+        '25':4000,
+        '26':2000,
+        '27':5000,
+        '28':4000,
+        '29':2000,
+        '30':4456,
+        '31':5632
+      },
+      'currentMonth|31':{
+        '1':5000,
+        '2':4000,
+        '3':2000,
+        '4':5000,
+        '5':4000,
+        '6':2000,
+        '7':5000,
+        '8':4000,
+        '9':2000,
+        '10':5000,
+        '11':2020,
+        '12':3500,
+        '13':2040,
+        '14':5340,
+        '15':3400,
+        '16':2500,
+        '17':5000,
+        '18':2200,
+        '19':2000,
+        '20':4480,
+        '21':3487,
+        '22':2000,
+        '23':2200,
+        '24':5000,
+        '25':3567,
+        '26':1879,
+        '27':5000,
+        '28':4567,
+        '29':1480,
+        '30':3564,
+        '31':4560
+      }
+    }
+  })
+}
+//年度个人累计完成情况
+export const personYearOverview = () => {
+  return Mock.mock({
+    'code':0,
+    'msg':'success',
+    'data':[
+      {
+        name:'zhangsan',
+        totalNum:1820,
+        targetNum:1900
+      },
+      {
+        name:'lisi',
+        totalNum:2348,
+        targetNum:2100
+      },
+      {
+        name:'wangwu',
+        totalNum:2903,
+        targetNum:3100
+      },
+      {
+        name:'zhaoliu',
+        totalNum:10497,
+        targetNum:12150
+      }
+    ]
+  })
+}
+//当月个人累计完成情况
+export const personMonthOverview = () => {
+  return Mock.mock({
+    code:0,
+    msg:'success',
+    'data':[
+      {
+        name:'zhangsan',
+        totalNum:23200,
+        finishingRate:0.102
+      },
+      {
+        name:'lisi',
+        totalNum:25600,
+        finishingRate:0.203
+      },
+      {
+        name:'wangwu',
+        totalNum:76700,
+        finishingRate:0.234
+      },
+      {
+        name:'zhaoliu',
+        totalNum:135600,
+        finishingRate:0.23
+      }
+    ]
+  })
+}
+//多媒体消息每月下发量
+export const monthsNum = () => {
+  return Mock.mock({
+    code:1,
+    msg:'success',
+    'data':{
+      '1':43288,
+      '2':23445,
+      '3':66631,
+      '4':44321,
+      '5':43288,
+      '6':23445,
+      '7':66631,
+      '8':44321,
+      '9':43288,
+      '10':23445,
+      '11':66631,
+      '12':44321,
+    }
+  })
+}
+//行业短信消息概况
+export const getIndustryOverview = () => {
+  return Mock.mock({
+    'code':0,
+    'data':{
+      'totalNum':12120000000,
+      'totalRate':0.4,
+      'monthNum':6000000,
+      'monthRate':0.3,
+      'incomeNum':1200000,
+      'incomeRate':0.6,
+      'dayNum':50000
+    },
+    'msg':'success'
+  })
+}
+//行业短信日下发量
+export const getIndustryDayNum = () => {
+  return Mock.mock({
+    'code':0,
+    'msg':'success',
+    'data':{
+      'preMonth|31':{
+        '1':120,
+        '2':132,
+        '3':101,
+        '4':134,
+        '5':90,
+        '6':230,
+        '7':210,
+        '8':120,
+        '9':132,
+        '10':101,
+        '11':134,
+        '12':90,
+        '13':230,
+        '14':210,
+        '15':120,
+        '16':132,
+        '17':101,
+        '18':134,
+        '19':90,
+        '20':230,
+        '21':210,
+        '22':120,
+        '23':132,
+        '24':101,
+        '25':134,
+        '26':90,
+        '27':230,
+        '28':210,
+        '29':300,
+        '30':400,
+        '31':450
+      },
+      'currentMonth|31':{
+        '1':110,
+        '2':112,
+        '3':111,
+        '4':114,
+        '5':190,
+        '6':130,
+        '7':110,
+        '8':110,
+        '9':112,
+        '10':111,
+        '11':114,
+        '12':190,
+        '13':130,
+        '14':110,
+        '15':110,
+        '16':112,
+        '17':121,
+        '18':104,
+        '19':190,
+        '20':210,
+        '21':110,
+        '22':110,
+        '23':112,
+        '24':111,
+        '25':114,
+        '26':50,
+        '27':210,
+        '28':240,
+        '29':330,
+        '30':200,
+        '31':300
+      }
+    }
+  })
+}
+//年度个人累计收入完成情况
+export const personIncomeOverview = () => {
+  return Mock.mock({
+    'code':0,
+    'msg':'success',
+    'data':[
+      {
+        name:'zhangsan',
+        totalNum:1820,
+        targetNum:1900
+      },
+      {
+        name:'lisi',
+        totalNum:2348,
+        targetNum:2100
+      },
+      {
+        name:'wangwu',
+        totalNum:2903,
+        targetNum:3100
+      },
+      {
+        name:'zhaoliu',
+        totalNum:10497,
+        targetNum:12150
+      }
+    ]
+  })
+}
+//行业短信每月下发量
+export const personmOverview = () => {
+  return Mock.mock({
+    code:0,
+    msg:'success',
+    'data':{
+      '1':43288,
+      '2':23445,
+      '3':66631,
+      '4':44321,
+      '5':43288,
+      '6':23445,
+      '7':66631,
+      '8':44321,
+      '9':43288,
+      '10':23445,
+      '11':66631,
+      '12':44321,
+    }
+  })
+}
+//合作单位排行
+export const partnerRank = () => {
+  return Mock.mock({
+    code:1,
+    msg:'success',
+    'data':[
+      {
+        'name':'中国建行',
+        'data':131744,
+        'upDown':-3,
+      },
+      {
+        'name':'天翼电子商务',
+        'data':109970,
+        'upDown':0,
+      },
+      {
+        'name':'北京国都',
+        'data':63230,
+        'upDown':-2,
+      },
+      {
+        'name':'工商银行',
+        'data':104970,
+        'upDown':+3,
+      },
+      {
+        'name':'中国银行',
+        'data':29034,
+        'upDown':0,
+      },
+      {
+        'name':'北京智云',
+        'data':23989,
+        'upDown':-2,
+      },
+      {
+        'name':'招商银行',
+        'data':23489,
+        'upDown':-1,
+      },
+      {
+        'name':'上海红楼快递',
+        'data':23034,
+        'upDown':0,
+      },
+      {
+        'name':'国都信业',
+        'data':18803,
+        'upDown':+1,
+      },
+      {
+        'name':'深圳物联',
+        'data':18203,
+        'upDown':+2,
+      }
+    ]
+  })
+}
