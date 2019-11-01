@@ -5,15 +5,14 @@
   </div>
 </template>
 <script>
-import {getMediaOverview} from '@/api'
+// import {getMediaOverview} from '@/api'
 export default {
   data(){
     return {}
   },
   created(){
-    getMediaOverview().then(res => {
-      console.log(res)
-    })
+    // getMediaOverview().then(res => {
+    // })
   },
   mounted(){
 

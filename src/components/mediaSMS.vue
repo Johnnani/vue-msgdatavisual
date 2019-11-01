@@ -10,17 +10,17 @@
         <div class="body1-left-content">
           <div class="item">
             <h4><span class="cfx"></span>累计下发量</h4>
-            <p class="ls2">{{overViewData.totalNum}}</p>
-            <p class="finished"><i>完成率</i><span class="ls2">{{overViewData.totalRate}}%</span></p>
+            <p class="ls2">{{totalData.yearTotal}}</p>
+            <p class="finished"><i>完成率</i><span class="ls2">30%</span></p>
           </div>
           <div class="item">
             <h4><span class="cfx"></span>当月下发量</h4>
-            <p class="ls2">{{overViewData.monthNum}}</p>
-            <p class="finished"><i>完成率</i><span class="ls2">{{overViewData.monthRate}}%</span></p>
+            <p class="ls2">{{totalData.monthTotal}}</p>
+            <p class="finished"><i>完成率</i><span class="ls2">2%</span></p>
           </div>
           <div class="item">
             <h4><span class="cfx"></span>当日下发量</h4>
-            <p class="ls2">{{overViewData.dayNum}}</p>
+            <p class="ls2">{{totalData.dayTotal}}</p>
           </div>
         </div>
       </div>
@@ -70,30 +70,49 @@
 import bgborder from "./bgborder.vue";
 import echarts from "echarts";
 import { setTimeout } from 'timers';
-import {getMediaOverview,getMediaDayNum,personYearOverview,personMonthOverview,monthsNum} from '@/api';//多媒体消息概况
+import {personYearOverview,personMonthOverview,monthsNum} from '@/api';//多媒体消息概况
 import util from '@/libs/util';
 export default {
   components: {
     bgborder
   },
   created() {
+    //全部实际数据
+    util.getData().then(res1 => {
+      this.totalData=res1
+      this.dayNumData = {
+        preMonth:res1.prevNums,
+        currentMonth:res1.currNums
+      };
+      this.monthsNumData = res1.monthsNum;
+      // setInterval(function(){
+      //   util.getData().then(res2 => {
+      //     this.totalData = res2;
+      //     this.dayNumData = {
+      //       preMonth:res2.prevNums,
+      //       currentMonth:res2.currNums
+      //     }
+      //     this.monthsNumData = res2.monthsNum
+      //   })
+      // },900000)
+    })
     //多媒体消息概况
-    getMediaOverview().then(res => {
-      if(res.data.code===0){
-        this.overViewData = res.data.data
-        for(let p in this.overViewData){
-          if(p === 'totalNum' || p === 'dayNum' || p === 'monthNum'){
-            this.overViewData[p] = util.formatNumber(this.overViewData[p])
-          }else{
-            this.overViewData[p] = this.overViewData[p] * 100
-          }
-        }
-      }
-    })
+    // getMediaOverview().then(res => {
+    //   if(res.data.code===0){
+    //     this.overViewData = res.data.data
+    //     for(let p in this.overViewData){
+    //       if(p === 'totalNum' || p === 'dayNum' || p === 'monthNum'){
+    //         this.overViewData[p] = util.formatNumber(this.overViewData[p])
+    //       }else{
+    //         this.overViewData[p] = this.overViewData[p] * 100
+    //       }
+    //     }
+    //   }
+    // })
     //多媒体消息日下发量
-    getMediaDayNum().then(res => {
-      this.dayNumData = res.data.data;
-    })
+    // getMediaDayNum().then(res => {
+    //   this.dayNumData = res.data.data;
+    // })
     //年度个人累计完成情况
     personYearOverview().then(res => {
       this.personYearOverviewData = res.data.data;
@@ -103,9 +122,9 @@ export default {
       this.personMonthOverviewData = res.data.data;
     })
     //每月下发量
-    monthsNum().then(res => {
-      this.monthsNumData = res.data.data;
-    })
+    // monthsNum().then(res => {
+    //   this.monthsNumData = res.data.data;
+    // })
   },
   mounted() {
     // this.personYear();
@@ -119,6 +138,7 @@ export default {
   },
   data(){
     return {
+      totalData:{},//全部数据
       overViewData:{},//多媒体消息概况数据
       dayNumData:{},//多媒体消息日下发量数据
       dailyChart:null,//日下发量chart
@@ -163,12 +183,12 @@ export default {
   methods: {
     //消息日下发量
     dailyDetail() {
-      let arr = [];
+      let arr = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
       let currentMonthData = [];
       let preMonthData = [];
-      for(let i = 1;i<=31;i++){
-        arr.push((i).toString());
-      }
+      // for(let i = 1;i<=31;i++){
+      //   arr.push((i).toString());
+      // }
       arr.forEach(item => {
         this.dayNumData.currentMonth[item]?currentMonthData.push(this.dayNumData.currentMonth[item]) : 0;
         this.dayNumData.preMonth[item]?preMonthData.push(this.dayNumData.preMonth[item]) : 0;
@@ -509,7 +529,7 @@ export default {
                 alignWithLabel: true
             },
             data: msg.name,
-			      textStyle:{
+            textStyle:{
                fontSize:13,
                color:'#939499'
             },
@@ -567,10 +587,10 @@ export default {
           max: 100,
           position: 'right',
           textStyle:{
-              fontSize:15,
-              color:'#939499'
+            fontSize:15,
+            color:'#939499'
           },
-		      axisLine: {
+          axisLine: {
             lineStyle: {
                 type: 'solid',
                 color: '#2f7a9b',//左边线的颜色
@@ -634,14 +654,16 @@ export default {
       let dataAxis = [];
       let data = [];
       for(let i = 1;i<=12;i++){
-        dataAxis.push((i).toString())
+        i<10?
+          dataAxis.push((`0${i}`)):
+          dataAxis.push((`${i}`));
+
       }
       dataAxis.forEach(item => {
         data.push(this.monthsNumData[item])
       })
       this.monthAmountChart = echarts.init(document.getElementById("month-amount"));
-      // let dataAxis = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-      // let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149];
+
       let yMax = Math.max(...dataAxis);
       let dataShadow = [];
       for (var i = 0; i < data.length; i++) {
@@ -710,7 +732,7 @@ export default {
             },
             barGap:'-100%',
             barCategoryGap:'40%',
-			      barWidth : 20,
+            barWidth : 20,
             data: dataShadow,
             animation: false
           },
@@ -910,6 +932,7 @@ export default {
         font-size:0.24rem;
         color:#0082c9;
         background: url("../assets/imgs/line1.png") 86% center no-repeat;
+        background-size:30% auto;
         .cfx{
           width: 0.08rem;
           height: 0.22rem;

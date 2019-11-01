@@ -2,9 +2,9 @@
   <div class="home">
     <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide>
+      <!-- <swiper-slide>
         <course></course>
-      </swiper-slide>
+      </swiper-slide> -->
       <swiper-slide>
         <business-map></business-map>
       </swiper-slide>
@@ -14,18 +14,13 @@
       <swiper-slide>
         <industry-SMS></industry-SMS>
       </swiper-slide>
-      <!-- Optional controls -->
-      <!-- <div class="swiper-pagination" slot="pagination"></div>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>
-      <div class="swiper-scrollbar" slot="scrollbar"></div> -->
     </swiper>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import course from "@/components/course.vue"
+// import course from "@/components/course.vue"
 import businessMap from "@/components/businessMap.vue"
 import mediaSMS from "@/components/mediaSMS.vue"
 import industrySMS from "@/components/industrySMS.vue"
@@ -33,7 +28,7 @@ import industrySMS from "@/components/industrySMS.vue"
 export default {
   name: "home",
   components: {
-    course,
+    // course,
     businessMap,
     mediaSMS,
     industrySMS

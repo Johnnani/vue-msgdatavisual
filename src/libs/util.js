@@ -1,3 +1,5 @@
+import {getYearData,getMonthData,getPreviousMonthData} from '@/api'
+
 let util = {};
 // 页面适配
 util.adapt = function () {
@@ -35,4 +37,47 @@ util.formatNumber = function (n) {
   let r = len % 3;
   return r > 0 ? b.slice(0, r) + ',' + b.slice(r, len).match(/\d{3}/g).join(',') : b.slice(r, len).match(/\d{3}/g).join(',');
 };
+//数组求和
+util.sum = function(arr){
+  let isArray = Object.prototype.toString.call(arr) === '[object Array]';
+  if(!isArray){
+    return arr;
+  }else{
+    return arr.reduce((prev,curr) => prev + curr)
+  }
+}
+//获取数据
+util.getData = async function () {
+  //并发请求
+  let [yearData,monthData,previousData] = await Promise.all([
+    getYearData(),
+    getMonthData(),
+    getPreviousMonthData()
+  ])
+  //处理数据
+  let obj = {};
+  let arr1 = Object.values(yearData.data.report);
+  let arr2 = Object.values(monthData.data.report);
+  let arr3 = Object.values(previousData.data.report);
+  obj.yearTotal = util.formatNumber(util.sum(arr1));
+  obj.monthTotal = util.formatNumber(util.sum(arr2));
+  obj.dayTotal = util.formatNumber(arr2[arr2.length - 1]);
+  obj.monthsNum = {};
+  obj.currNums = {};
+  obj.prevNums = {};
+  Object.keys(yearData.data.report).forEach((item,index) => {
+    let key = item.substring(4,6);
+    obj.monthsNum[key] = arr1[index];
+  })
+  Object.keys(monthData.data.report).forEach((item,index) => {
+    let key = item.substring(item.length-2,item.length);
+    obj.currNums[key] = arr2[index];
+  })
+  Object.keys(previousData.data.report).forEach((item,index) => {
+    let key = item.substring(item.length-2,item.length);
+    obj.prevNums[key] = arr3[index];
+  })
+  return obj;
+  
+}
 export default util;

@@ -505,7 +505,7 @@ export default {
               type: 'shadow'
           }
         },
-	      color: colors,	
+        color: colors,	
         grid: {
           left: 0,
           right: '4%',
@@ -515,12 +515,12 @@ export default {
         xAxis: {
           type: 'value',
           boundaryGap: [0, 0.01],
-		      splitLine:{show: false},//去除网格线
-		      textStyle:{
+          splitLine:{show: false},//去除网格线
+          textStyle:{
             fontSize:13,
             color:'#939499'
           },
-		      axisLine: {
+          axisLine: {
             lineStyle: {
               type: 'solid',
               color: '#2f7a9b',//左边线的颜色
@@ -535,7 +535,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-		      axisLine: {
+          axisLine: {
             lineStyle: {
                 type: 'solid',
                 color: '#2f7a9b',//左边线的颜色
@@ -556,7 +556,7 @@ export default {
             // barWidth:'70%',
             barCategoryGap:'40%',
             // barGap:'-100%',
-            data: msg1.data,
+            data: msg.data,
             itemStyle:{
               shadowBlur:20,
               shadowColor:'rgba(40,40,40,0.5)'
@@ -701,13 +701,13 @@ export default {
             },
             barGap:'-100%',
             barCategoryGap:'40%',
-			      barWidth : 20,
+            barWidth : 20,
             data: dataShadow,
             animation: false
         },
         {
           type: 'bar',
-			    barWidth : 20,
+          barWidth : 20,
             itemStyle: {
                 normal: {
                     color: new echarts.graphic.LinearGradient(
@@ -906,7 +906,7 @@ export default {
       & h4{
         font-size:0.24rem;
         color:#0082c9;
-        background: url("../assets/imgs/line1.png") 86% center no-repeat;
+        background: url("../assets/imgs/line1.png") 90% center no-repeat;
         background-size:30% auto;
         .cfx{
           width: 0.08rem;

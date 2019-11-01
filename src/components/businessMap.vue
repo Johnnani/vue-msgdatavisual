@@ -1,5 +1,6 @@
 <template>
   <div class="business-map-wrapper">
+    <h3 class="ls2">多媒体信息业务签约省</h3>
     <div class="business-map" id="business-map">
     </div>
     <div class="business-table">
@@ -43,23 +44,23 @@ export default {
       signProvinceChart: null //签约省echarts
     };
   },
-  computed:{
-    isFullScreen(){
-      return this.$store.state.isFullScreen
+  computed: {
+    isFullScreen() {
+      return this.$store.state.isFullScreen;
     }
   },
   mounted() {
     this.signProvince();
     //监听窗口变化事件
-    window.addEventListener("resize",()=>{
-      this.$store.commit("changeScreen",!this.$store.state.isFullScreen)
-    })
+    window.addEventListener("resize", () => {
+      this.$store.commit("changeScreen", !this.$store.state.isFullScreen);
+    });
   },
-  watch:{
-    isFullScreen(){
-      setTimeout(()=>{
+  watch: {
+    isFullScreen() {
+      setTimeout(() => {
         this.signProvinceChart.resize();
-      },500)
+      }, 500);
     }
   },
   methods: {
@@ -68,13 +69,7 @@ export default {
       this.signProvinceChart = echarts.init(
         document.getElementById("business-map")
       );
-      // let colors =  [
-      //   ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
-      //   ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
-      //   ["#DD6B66", "#759AA0", "#E69D87", "#8DC1A9", "#EA7E53", "#EEDD78", "#73A373", "#73B9BC", "#7289AB", "#91CA8C", "#F49F42"],
-      // ];
-      // let colors = ['#759AA0','#E7BCF3','#e09800','#00c891'];
-      let colors = ["#C4CCD3", "#b1a1c7", "#ffc100", "#93d150"];
+      let colors = ["#C4CCD3", "#E7BCF3", "#ffc100", "#93d150"];
       let chinaGeoCoordMap = {
         黑龙江: [127.9688, 45.368],
         内蒙古: [110.3467, 41.4899],
@@ -116,6 +111,7 @@ export default {
         [],
         []
       ];
+      //每人负责省状态，1：已签约，2：重点省，3：开发省，4，无意向
       let provincePersonData = [
         {
           province: "北京",
@@ -295,6 +291,7 @@ export default {
         res.value = item.value;
         return res;
       });
+      // console.log(chinaGeoCoordMap)
       for (var key in chinaGeoCoordMap) {
         let obj = util.filterByProperty(provincePersonData, "province", key)
           .length
@@ -334,43 +331,21 @@ export default {
       };
       let optionXyMap01 = {
         baseOption: {
-          // backgroundColor: "#142037",
-          visualMap: {
-            // 图例值控制
-            show: true,
-            type: "piecewise",
-            seriesIndex: 0,
-            x: "30%",
-            y: "80%",
-            textStyle: {
-              color: "#fff"
-            },
-            inverse: true,
-            pieces: [
-              { value: 1, label: "已签约" },
-              { value: 2, label: "重点省" },
-              { value: 3, label: "开发省" },
-              { value: 4, label: "无意向" }
-            ],
-            color: colors
-          },
           timeline: {
             axisType: "category",
             autoPlay: true,
             playInterval: 6000,
-            z: 3,
-            left: "14%",
+            left: "12%",
             top: "center",
             width: 80,
             height: "80%",
             data: voltageLevel,
             orient: "vertical",
-            realtime: true,
             label: {
               normal: {
                 textStyle: {
                   color: "#fff",
-                  fontSize:28
+                  fontSize: 20
                 }
               },
               emphasis: {
@@ -380,13 +355,10 @@ export default {
               }
             },
             symbolSize: 14,
-            // lineStyle: {
-            //   color: "#00d3fe"
-            // },
             checkpointStyle: {
               borderColor: "#777",
               symbolSize: 16,
-              borderWidth: 2,
+              borderWidth: 2
             },
             controlStyle: {
               showNextBtn: true,
@@ -406,6 +378,25 @@ export default {
           animationEasing: "cubicInOut",
           animationDurationUpdate: 1000,
           animationEasingUpdate: "cubicInOut",
+          visualMap: {
+            // 图例值控制
+            show: true,
+            type: "piecewise",
+            seriesIndex: 0,
+            x: "22%",
+            y: "80%",
+            textStyle: {
+              color: "#fff"
+            },
+            inverse: true,
+            pieces: [
+              { value: 1, label: "已签约" },
+              { value: 2, label: "重点省" },
+              { value: 3, label: "开发省" },
+              { value: 4, label: "无意向" }
+            ],
+            color: colors
+          },
           tooltip: {
             trigger: "axis", // hover触发器
             axisPointer: {
@@ -417,9 +408,10 @@ export default {
             }
           },
           geo: {
-            show: false,
+            show: true,
             map: "china",
-            roam: true,
+            roam: false,
+            zoom: 1,
             layoutCenter: ["50%", "50%"],
             layoutSize: "120%",
             label: {
@@ -435,7 +427,7 @@ export default {
                   type: "radial",
                   x: 0.5,
                   y: 0.5,
-                  r: 0.5,
+                  r: 0.8,
                   colorStops: [
                     {
                       offset: 0,
@@ -449,7 +441,6 @@ export default {
                   globalCoord: false // 缺省为 false
                 },
                 shadowColor: "rgba(128, 217, 248, 1)",
-                // shadowColor: 'rgba(255, 255, 255, 1)',
                 shadowOffsetX: 0,
                 shadowOffsetY: 0,
                 shadowBlur: 120
@@ -468,17 +459,18 @@ export default {
         optionXyMap01.options.push({
           title: [
             {
-              text: "多媒体信息业务签约省",
+              // text: "多媒体信息业务签约省",
               left: "center",
-              top: "40px",
-              textStyle: {
-                color: "#fff",
-                fontSize: 42,
-                fontFamily: "思源黑体"
-              },
+              // top: "40px",
+              // textStyle: {
+              //   color: "#fff",
+              //   fontSize: 40,
+              //   fontFamily: "思源黑体"
+              // },
               subtext: voltageLevel[n] + "负责省份情况",
               subtextStyle: {
-                fontSize: 32
+                fontSize: 32,
+                lineHeight:60
               }
             }
           ],
@@ -489,7 +481,7 @@ export default {
               map: "china",
               // geoIndex: 0,
               zoom: 1.152,
-              zlevel: 2,
+              // zlevel: 2,
               left: "center",
               align: "right",
               label: {
@@ -512,14 +504,14 @@ export default {
                   borderColor: "red"
                 }
               },
-              data: areaData,
+              data: areaData
               // color: colors
             },
             {
               //  name: 'Top 5',
               type: "effectScatter",
               coordinateSystem: "geo",
-              zlevel: 2,
+              // zlevel: 2,
               data: convertData(mapData[n]),
               symbol: "circle",
               symbolSize: function(val) {
@@ -533,7 +525,7 @@ export default {
               rippleEffect: {
                 brushType: "stroke"
               },
-              hoverAnimation: true,
+              // hoverAnimation: true,
               label: {
                 normal: {
                   show: true,
@@ -584,59 +576,70 @@ export default {
 };
 </script>
 <style lang="less">
-.business-map-wrapper{
-  width:100%;
-  height:100%;
-  .business-map{
-    width:100%;
-    height:100%;
-  }
-  .business-table{
-    position:absolute;
-    width:20%;
-    // height:30%;
-    top:54%;
-    right:6%;
-    transform: translateY(-50%);
-    border-top:1px solid #78cad8;
-    border-left:1px solid #78cad8;
+.business-map-wrapper {
+  width: 100%;
+  height: 100%;
+  display:flex;
+  flex-direction:column;
+  h3{
+    font-size:0.52rem;
     text-align:center;
-    color:#fff;
-    line-height:0.6rem;
-    font-size:0.14rem;
-    .business-table-row{
-      height:0.6rem;
-      width:100%;
-      display:flex;
+    font-weight:700;
+    padding-top:0.2rem;
+    background-image:linear-gradient(top,#f5faf4,#c0cdc6);
+    background-clip:text;
+    -webkit-text-fill-color: transparent;
+  }
+  .business-map {
+    width: 100%;
+    flex-grow:1;
+    // height: 100%;
+  }
+  .business-table {
+    position: absolute;
+    width: 20%;
+    // height:30%;
+    top: 56%;
+    right: 4%;
+    transform: translateY(-50%);
+    border-top: 1px solid #78cad8;
+    border-left: 1px solid #78cad8;
+    text-align: center;
+    color: #fff;
+    line-height: 0.6rem;
+    font-size: 0.14rem;
+    .business-table-row {
+      height: 0.6rem;
+      width: 100%;
+      display: flex;
       // justify-content: space-around;
-      p{
-        border-right:1px solid #78cad8;
-        border-bottom:1px solid #78cad8;
-        span{
-          color:#f00;
+      p {
+        border-right: 1px solid #78cad8;
+        border-bottom: 1px solid #78cad8;
+        span {
+          color: #f00;
         }
       }
-      p:nth-child(1){
-        width:14%;
+      p:nth-child(1) {
+        width: 14%;
       }
-      p:nth-child(2){
-        width:66%;
+      p:nth-child(2) {
+        width: 66%;
       }
-      p:nth-child(3){
-        width:20%;
-        color:#ffae4c;
+      p:nth-child(3) {
+        width: 20%;
+        color: #ffae4c;
       }
-      &.business-table-tit{
-        background:#152c78;
-        p{
-          border-bottom:none;
+      &.business-table-tit {
+        background: #152c78;
+        p {
+          border-bottom: none;
         }
-        p:nth-child(3){
-          color:#fff;
+        p:nth-child(3) {
+          color: #fff;
         }
       }
     }
-    
   }
 }
 </style>

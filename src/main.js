@@ -6,8 +6,18 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import util from '@/libs/util'
 // require('./mock')
 import './mock'
+// util.getData()
 
 
+// getYearData().then(res => {
+//   console.log(res)
+// })
+// getMonthData().then(res => {
+//   console.log(res)
+// })
+// getPreviousMonthData().then(res => {
+//   console.log(res)
+// })
 //require styles
 import 'swiper/dist/css/swiper.css'
 

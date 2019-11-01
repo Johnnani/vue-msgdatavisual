@@ -1,12 +1,11 @@
 import Mock from 'mockjs'
-// const Random = Mock.Random
 
 //多媒体消息概况
 export const getMediaOverview = () => {
   return Mock.mock({
     'code':0,
     'data':{
-      'totalNum':12120000000,
+      'totalNum':1200000,
       'totalRate':0.4,
       'monthNum':6000000,
       'monthRate':0.3,
@@ -80,7 +79,7 @@ export const getMediaDayNum = () => {
         '23':2200,
         '24':5000,
         '25':3567,
-        '26':1879,
+        '26':90,
         '27':5000,
         '28':4567,
         '29':1480,

@@ -1,4 +1,96 @@
 import axios from '@/libs/api.request';
+import moment from 'moment';
+import encrypt from '@/libs/encrypt';
+let Phone = '17744537705';
+let date = moment().format("YYYYMMDD")
+let MacId = "W628L45X";
+let RandCode = "662537";
+//当前年数据
+export const getYearData = () => {
+  let year = moment().format('YYYY')
+  let Sign = encrypt.md5(Phone+date+RandCode+MacId+year+'000000')
+  let params = {
+    Phone,
+    date,
+    Sign,
+    year,
+    month:'00',
+    day:'00',
+    hour:'00',
+    type:'00'
+  }
+  return axios.request({
+    url:'http://124.126.120.102/api/report',
+    // url: 'http://172.16.148.116:9702/api/report',
+    method: 'post',
+    data:params
+  })
+}
+//当前月数据
+export const getMonthData = () => {
+  let year = moment().format('YYYY')
+  let month = moment().format('MM')
+  let Sign = encrypt.md5(Phone+date+RandCode+MacId+year+month+'0000')
+  let params = {
+    Phone,
+    date,
+    Sign,
+    year,
+    month,
+    day:'00',
+    hour:'00',
+    type:'00'
+  }
+  return axios.request({
+    url: 'http://124.126.120.102/api/report',
+    // url:'http://172.16.148.116:9702/api/report',
+    method: 'post',
+    data:params
+  })
+}
+//前一月数据
+export const getPreviousMonthData = () => {
+  let year = moment().format('YYYY')
+  let month = moment().subtract(1,'month').format('MM')
+  let Sign = encrypt.md5(Phone+date+RandCode+MacId+year+month+'0000')
+  let params = {
+    Phone,
+    date,
+    Sign,
+    year,
+    month,
+    day:'00',
+    hour:'00',
+    type:'00'
+  }
+  return axios.request({
+    // url:'http://172.16.148.116:9702/api/report',
+    url: 'http://124.126.120.102/api/report',
+    method: 'post',
+    data:params
+  })
+}
+//当日数据
+export const getDayData = () => {
+  let year = parseInt(moment().format('YYYY'))
+  let month = parseInt(moment().format('M'))
+  let day = parseInt(moment().format('D'))
+  let Sign = encrypt.md5(Phone+date+RandCode+MacId+year+month+day+'0')
+  let params = {
+    Phone,
+    date,
+    Sign,
+    year,
+    month,
+    day,
+    hour:0
+  }
+  return axios.request({
+    url: 'http://124.126.120.102/api/total',
+    method: 'post',
+    data:params
+  })
+}
 //多媒体消息概况
 export const getMediaOverview = () => {
   return axios.request({
