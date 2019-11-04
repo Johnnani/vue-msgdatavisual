@@ -79,22 +79,26 @@ export default {
   created() {
     //全部实际数据
     util.getData().then(res1 => {
-      this.totalData=res1
+      this.totalData.yearTotal=res1.yearTotal
+      this.totalData.monthTotal=res1.monthTotal
+      this.totalData.dayTotal=res1.dayTotal
       this.dayNumData = {
         preMonth:res1.prevNums,
         currentMonth:res1.currNums
       };
       this.monthsNumData = res1.monthsNum;
-      // setInterval(function(){
-      //   util.getData().then(res2 => {
-      //     this.totalData = res2;
-      //     this.dayNumData = {
-      //       preMonth:res2.prevNums,
-      //       currentMonth:res2.currNums
-      //     }
-      //     this.monthsNumData = res2.monthsNum
-      //   })
-      // },900000)
+      setInterval(() => {
+        util.getData().then(res2 => {
+          this.$set(this.totalData,'yearTotal',res2.yearTotal)
+          this.$set(this.totalData,'monthTotal',res2.monthTotal)
+          this.$set(this.totalData,'dayTotal',res2.dayTotal)
+          this.dayNumData = {
+            preMonth:res2.prevNums,
+            currentMonth:res2.currNums
+          }
+          this.monthsNumData = res2.monthsNum
+        })
+      },60000)
     })
     //多媒体消息概况
     // getMediaOverview().then(res => {
@@ -127,9 +131,6 @@ export default {
     // })
   },
   mounted() {
-    // this.personYear();
-    // this.personMonth();
-    // this.monthAmount();
     //监听窗口变化事件
     window.addEventListener("resize",()=>{
       this.$store.commit("changeScreen",!this.$store.state.isFullScreen)
@@ -138,7 +139,11 @@ export default {
   },
   data(){
     return {
-      totalData:{},//全部数据
+      totalData:{
+        yearTotal:0,//年累计下发量
+        monthTotal:0,//当月下发量
+        dayTotal:0//当日下发量
+      },//全部数据
       overViewData:{},//多媒体消息概况数据
       dayNumData:{},//多媒体消息日下发量数据
       dailyChart:null,//日下发量chart
@@ -168,7 +173,7 @@ export default {
       },500)
     },
     dayNumData(){
-      this.dailyDetail();
+      this.dailyDetail()
     },
     personYearOverviewData(){
       this.personYear();
@@ -177,7 +182,7 @@ export default {
       this.personMonth();
     },
     monthsNumData(){
-      this.monthAmount();
+      this.monthAmount()
     }
   },
   methods: {
@@ -221,7 +226,7 @@ export default {
         grid: {
           left: "3%",
           right: "4%",
-          bottom: "13%",
+          bottom: "8%",
           containLabel: true
         },
 
@@ -506,7 +511,7 @@ export default {
           }
         },
         grid: {
-          left: 0,
+          left: '3%',
           right: '4%',
           bottom: '8%',
           containLabel: true
